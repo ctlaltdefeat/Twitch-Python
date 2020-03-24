@@ -28,7 +28,6 @@ class IRC(threading.Thread):
             try:
                 data = self._read_line()
                 text = data.decode("UTF-8").strip('\n\r')
-                print(text)
                 
                 if text.find('PING') >= 0:
                     self.send_raw('PONG ' + text.split()[1])
@@ -62,6 +61,11 @@ class IRC(threading.Thread):
         channel = channel.lstrip('#')
         self.channels.append(channel)
         self.send_raw(f'JOIN #{channel}')
+    
+    def join_channels(self, channels: List[str]) -> None:
+        channels = [channel.lstrip('#') for channel in channels]
+        [self.channels.remove(channel) for channel in channels]
+        self.send_raw('JOIN #' + '#'.join(channels))
 
     def leave_channel(self, channel: str) -> None:
         channel = channel.lstrip('#')
