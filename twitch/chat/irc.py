@@ -64,7 +64,7 @@ class IRC(threading.Thread):
     
     def join_channels(self, channels: List[str]) -> None:
         channels = [channel.lstrip('#') for channel in channels]
-        [self.channels.remove(channel) for channel in channels]
+        [self.channels.append(channel) for channel in channels]
         self.send_raw('JOIN #' + '#'.join(channels))
 
     def leave_channel(self, channel: str) -> None:
