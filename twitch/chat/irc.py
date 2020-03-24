@@ -28,7 +28,8 @@ class IRC(threading.Thread):
             try:
                 data = self._read_line()
                 text = data.decode("UTF-8").strip('\n\r')
-
+                print(text)
+                
                 if text.find('PING') >= 0:
                     self.send_raw('PONG ' + text.split()[1])
 
